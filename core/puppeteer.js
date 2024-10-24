@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer-extra');
 const stealthPlugin = require('puppeteer-extra-plugin-stealth');
-const { IS_PROD } = require('../utils/constants');
+const {IS_PROD} = require('../utils/constants');
 
 puppeteer.use(stealthPlugin());
 
@@ -8,16 +8,16 @@ puppeteer.use(stealthPlugin());
 process.setMaxListeners(Infinity);
 
 const getBrowserInstance = async (port) => {
-  const browser = await puppeteer.launch({
-    args: IS_PROD ? ['--no-sandbox', `--proxy-server=socks5://127.0.0.1:${port}`] : ['--no-sandbox'],
-    devtools: !IS_PROD,
-    executablePath: IS_PROD ? '/usr/bin/chromium-browser' : undefined,
-  });
-  const incognitoBrowserContext = browser.createIncognitoBrowserContext();
-  incognitoBrowserContext.close = browser.close;
-  return incognitoBrowserContext;
+    const browser = await puppeteer.launch({
+        args: IS_PROD ? ['--no-sandbox', '--incognito', `--proxy-server=socks5://127.0.0.1:${port}`] : ['--no-sandbox', '--incognito'],
+        devtools: !IS_PROD,
+        executablePath: IS_PROD ? '/usr/bin/chromium-browser' : undefined,
+    });
+    const incognitoBrowserContext = browser.createBrowserContext();
+    incognitoBrowserContext.close = browser.close;
+    return incognitoBrowserContext;
 };
 
 module.exports = {
-  getBrowserInstance,
+    getBrowserInstance,
 };
