@@ -11,7 +11,7 @@ const getBrowserInstance = async (port) => {
     const browser = await puppeteer.launch({
         args: IS_PROD ? ['--no-sandbox', '--incognito', `--proxy-server=socks5://127.0.0.1:${port}`] : ['--no-sandbox', '--incognito'],
         devtools: !IS_PROD,
-        executablePath: IS_PROD ? '/usr/bin/chromium-browser' : undefined,
+        executablePath: IS_PROD ? '/usr/bin/chromium-browser' : undefined
     });
     const incognitoBrowserContext = browser.createBrowserContext();
     incognitoBrowserContext.close = browser.close;

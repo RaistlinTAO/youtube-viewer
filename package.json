@@ -19,7 +19,5 @@
     "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
   "devDependencies": {
-    "eslint": "^9.13.0",
-    "eslint-config-google": "*"
   }
 }
