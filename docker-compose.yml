@@ -4,3 +4,8 @@ services:
     build:
       context: .
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"   # 每个日志文件最大10MB
+        max-file: "2"
