@@ -6,12 +6,13 @@ const watchVideosInSequence = async (page, ipAddr, targetUrlsList, durationInSec
     for (const url of targetUrlsList) {
         await page.goto(url, {timeout: 60000, waitUntil: 'load'});
         try {
-            await page.waitForSelector('.view-count', {timeout: 5000});
-            await page.mouse.click(100, 100);
+            await page.waitForSelector('.ytd-watch-metadata', {timeout: 5000});
+            //await page.mouse.click(100, 100);
             const duration = (durationInSeconds + _random(-(durationInSeconds / 6), (durationInSeconds / 6), true));
-            await page.waitFor(duration * 1000);
+            await new Promise((resolve, reject) => setTimeout(resolve, duration * 1000));
             await logger.logCount(page, url, ipAddr, duration);
-        } catch {
+        } catch (e) {
+            logger.error(e);
             logger.logFailedAttempt(url, ipAddr);
         }
     }
