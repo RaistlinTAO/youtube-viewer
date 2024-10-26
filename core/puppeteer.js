@@ -10,12 +10,12 @@ process.setMaxListeners(Infinity);
 const getBrowserInstance = async (port) => {
     const browser = await puppeteer.launch({
         args: IS_PROD
-            ? ['--no-sandbox', '--incognito', '--disable-dev-shm-usage', `--proxy-server=socks5://127.0.0.1:${port}`]
-            : ['--no-sandbox', '--incognito', '--disable-dev-shm-usage'],
+            ? ['--no-sandbox', '--incognito', '--disable-dev-shm-usage', `--proxy-server=socks5://127.0.0.1:${port}`, '--disable-setuid-sandbox']
+            : ['--no-sandbox', '--incognito', '--disable-dev-shm-usage', '--disable-setuid-sandbox'],
         devtools: !IS_PROD,
         executablePath: IS_PROD ? '/usr/bin/chromium-browser' : undefined,
         protocolTimeout: 60000, // 60秒
-        headless: true,
+        //headless: true,
     });
     const incognitoBrowserContext = browser.createBrowserContext();
     incognitoBrowserContext.close = browser.close;
