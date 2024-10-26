@@ -17,9 +17,6 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 ENV NODE_ENV production
 ENV YOUTUBE_VIEWER_FORCE_DEBUG false
 
-# 设置共享内存大小
-RUN mkdir -p /dev/shm && mount -t tmpfs -o size=1g tmpfs /dev/shm
-
 # 设置工作目录
 WORKDIR /app
 
