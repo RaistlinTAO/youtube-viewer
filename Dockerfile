@@ -29,6 +29,7 @@ COPY ./utils ./utils
 COPY ./index.js .
 COPY ./package.json .
 COPY ./urls.txt .
+COPY ./urls.csv .
 
 # 安装 npm 依赖
 RUN npm install
