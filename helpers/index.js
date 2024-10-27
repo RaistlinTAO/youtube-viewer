@@ -11,7 +11,7 @@ async function ensurePlaying(page) {
     });
 
     if (!isPlaying) {
-        logger.warn( 'Video is not playing, attempting to play...');
+        logger.warn('Video is not playing, attempting to play...');
         await page.click('.ytp-play-button'); // 点击播放按钮
         // 等待短暂时间以确认按钮响应
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -34,8 +34,14 @@ const watchVideosInSequence = async (page, ipAddr, targetUrlsList, durationInSec
             await ensurePlaying(page);
             //await page.mouse.click(100, 100);
             const watchTime = Math.random() < 95 / 100 ? urlInfo.duration * 1 : Math.random() * urlInfo.duration;
-
-            await new Promise((resolve) => setTimeout(resolve, watchTime * 1000));
+            const startTime = Date.now();
+            await page.waitForFunction(
+                (startTime, watchTime) => Date.now() - startTime >= watchTime * 1000,
+                {},
+                startTime,
+                watchTime
+            );
+            //await new Promise((resolve) => setTimeout(resolve, watchTime * 1000));
             await logger.logCount(page, urlInfo.url, ipAddr, watchTime);
         } catch (e) {
             logger.error(e);
