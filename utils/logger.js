@@ -19,22 +19,16 @@ const logFailedAttempt = (url, ipAddr) => {
 
 const logCount = async (page, url, ipAddr, duration) => {
     try {
-        const currentLiveViewCount = await page.$eval('.view-count', (viewCountNode) => viewCountNode.innerText.replace(/[^0-9]/g, ''));
-        if (!store[url]) store[url] = {initial: currentLiveViewCount};
-        store[url].current = currentLiveViewCount;
-        store[url].added = store[url].current - store[url].initial;
-        success(`Attempted ${url} with IP: ${ipAddr} for ${duration} seconds. (Init View Count: ${store[url].initial} Current View Count: ${store[url].current} Views added this session: ${store[url].added})`);
+        // const currentLiveViewCount = await page.$eval('.view-count', (viewCountNode) => viewCountNode.innerText.replace(/[^0-9]/g, ''));
+        // if (!store[url]) store[url] = {initial: currentLiveViewCount};
+        // store[url].current = currentLiveViewCount;
+        // store[url].added = store[url].current - store[url].initial;
+        success(`Attempted ${url} with IP: ${ipAddr} for ${duration} seconds.`); //(Init View Count: ${store[url].initial} Current View Count: ${store[url].current} Views added this session: ${store[url].added})`);
     } catch {
         logFailedAttempt(url, ipAddr);
     }
 };
 
 module.exports = {
-    logCount,
-    logFailedAttempt,
-    info,
-    error,
-    warn,
-    success,
-    debug,
+    logCount, logFailedAttempt, info, error, warn, success, debug,
 };

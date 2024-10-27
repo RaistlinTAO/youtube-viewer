@@ -11,7 +11,7 @@ async function ensurePlaying(page) {
     });
 
     if (!isPlaying) {
-        console.log('Video is not playing, attempting to play...');
+        logger.warn( 'Video is not playing, attempting to play...');
         await page.click('.ytp-play-button'); // 点击播放按钮
         // 等待短暂时间以确认按钮响应
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -28,7 +28,7 @@ const watchVideosInSequence = async (page, ipAddr, targetUrlsList, durationInSec
         //     return parseFloat(ua.browserVersion) >= 30;
         // }));
         await page.setExtraHTTPHeaders({referer: randomReferer});
-        await page.goto(urlInfo.url, {timeout: 60000, waitUntil: 'load'});
+        await page.goto(urlInfo.url, {timeout: 120000, waitUntil: 'load'});
         try {
             await page.waitForSelector('.ytp-play-button', {timeout: 5000});
             await ensurePlaying(page);
